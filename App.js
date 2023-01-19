@@ -6,9 +6,9 @@ import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
 const Stack = createStackNavigator()
 
-import HomeScreen from "./src/screens/Home"
-import NearbyScreen from "./src/screens/Nearby"
-import TraceRouteScreen from "./src/screens/TraceRoute"
+import { HomeScreen } from "./src/screens/Home"
+import { NearbyScreen } from "./src/screens/Nearby"
+import { TraceRouteScreen } from "./src/screens/TraceRoute"
 
 const TabsNavigation = () => {
   const [index, setIndex] = React.useState(1)
@@ -33,7 +33,7 @@ const TabsNavigation = () => {
   )
 }
 
-export const App = () => {
+function App() {
   return (
     <PaperProvider>
       <NavigationContainer>
@@ -42,3 +42,5 @@ export const App = () => {
     </PaperProvider>
   )
 }
+
+export default App
