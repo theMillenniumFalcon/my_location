@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react"
+import { BottomNavigation } from "react-native-paper"
+import { Provider as PaperProvider } from "react-native-paper"
 
-export default function App() {
+import { NavigationContainer } from "@react-navigation/native"
+import { createStackNavigator } from "@react-navigation/stack"
+const Stack = createStackNavigator()
+
+import { HomeScreen } from "./src/screens/Home"
+import { NearbyScreen } from "./src/screens/Nearby"
+import { TraceRouteScreen } from "./src/screens/TraceRoute"
+
+const TabsNavigation = () => {
+  const [index, setIndex] = useState(1)
+  const [routes] = React.useState([
+    { key: "traceRoute", title: "Trace Route", icon: "pin" },
+    { key: "home", title: "Home", icon: "home" },
+    { key: "nearby", title: "Who's near me", icon: "map" },
+  ])
+
+  const renderScene = BottomNavigation.SceneMap({
+    home: HomeScreen,
+    nearby: NearbyScreen,
+    traceRoute: TraceRouteScreen,
+  })
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <BottomNavigation
+      navigationState={{ index, routes }}
+      onIndexChange={setIndex}
+      renderScene={renderScene}
+    />
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function App() {
+  return (
+    <PaperProvider>
+      <NavigationContainer>
+        <TabsNavigation />
+      </NavigationContainer>
+    </PaperProvider>
+  )
+}
+
+export default App
