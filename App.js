@@ -1,6 +1,6 @@
 import React from "react"
-import { BottomNavigation } from "react-native-paper"
-import { Provider as PaperProvider } from "react-native-paper"
+import { DefaultTheme, Provider as PaperProvider, BottomNavigation } from "react-native-paper"
+
 
 import { NavigationContainer } from "@react-navigation/native"
 import { createStackNavigator } from "@react-navigation/stack"
@@ -33,9 +33,19 @@ const TabsNavigation = () => {
   )
 }
 
+const theme = {
+  ...DefaultTheme, roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#FAFAFA",
+    secondary: "white",
+    accent: "#F24744",
+  },
+}
+
 function App() {
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <NavigationContainer>
         <TabsNavigation />
       </NavigationContainer>
