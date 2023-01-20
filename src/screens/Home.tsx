@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react"
 import { StyleSheet, View, ImageBackground, Image } from "react-native"
 import { Text } from "react-native-paper"
+
+import Constants from "expo-constants"
+import * as Device from "expo-device"
 import * as Location from "expo-location"
 import * as Permissions from "expo-permissions"
-import { ScrollView } from "react-native"
 
 export const HomeScreen = () => {
     const [InitialState, setInitialState] = useState({
         location: null,
         geocode: null,
-        errorMessage: ""
+        errorMessage: "",
+        timestamp: 0
     })
 
     useEffect(() => {
-        getLocationAsync()
+        setInterval(() => {
+            getLocationAsync()
+        }, 5000)
     }, [])
 
     const getLocationAsync = async () => {
@@ -57,25 +62,32 @@ export const HomeScreen = () => {
 
     return (
         <ImageBackground
-            source={require("../../assets/backdrop.gif")}
+            source={require("../assets/backdrop.gif")}
             blurRadius={5}
             style={styles.container}
         >
             <View style={styles.overlay}>
                 <Image
-                    source={require("../../assets/location-pin.png")}
+                    source={require("../assets/location-pin.png")}
                     style={{ width: 100, height: 100 }}
                 />
+                <Text style={styles.heading3}>
+                    We'll steal your {Device.modelName}
+                </Text>
                 <Text style={styles.heading1}>
-                    {geocode ? `${geocode[0].city}, ${geocode[0].isoCountryCode}` : ""}
+                    {geocode
+                        ? `${geocode[0].city}, ${geocode[0].isoCountryCode}`
+                        : "locating you"}
                 </Text>
                 <Text style={styles.heading2}>
                     {geocode ? geocode[0].street : ""}
                 </Text>
                 <Text style={styles.heading3}>
-                    {location ? `${location.latitude}, ${location.longitude}` : ""}
+                    {location
+                        ? `Coordinates : ${location.latitude}, ${location.longitude}`
+                        : "almost done.."}
                 </Text>
-                <Text style={styles.heading2}>{InitialState.errorMessage}</Text>
+                <Text style={styles.heading2}>{errorMessage}</Text>
             </View>
         </ImageBackground>
     )
@@ -87,6 +99,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
+        marginTop: Constants.statusBarHeight,
     },
     overlay: {
         backgroundColor: "#00000070",
