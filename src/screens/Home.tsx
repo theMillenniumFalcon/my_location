@@ -53,15 +53,17 @@ export const HomeScreen = () => {
         }))
     }
 
+    const { location, geocode, errorMessage }: any = InitialState
+
     return (
         <ImageBackground
-            source={require("../assets/backdrop.gif")}
+            source={require("../../assets/backdrop.gif")}
             blurRadius={5}
             style={styles.container}
         >
             <View style={styles.overlay}>
                 <Image
-                    source={require("../assets/location-pin.png")}
+                    source={require("../../assets/location-pin.png")}
                     style={{ width: 100, height: 100 }}
                 />
                 <Text style={styles.heading1}>
@@ -109,4 +111,4 @@ const styles = StyleSheet.create({
         color: "#fff",
         margin: 5,
     },
-});
+})
